@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: vpn | {@jstdoit}]]></title>
+  <link href="http://jstdoit.github.io/blog/categories/vpn/atom.xml" rel="self"/>
+  <link href="http://jstdoit.github.io/"/>
+  <updated>2013-05-13T16:57:42+08:00</updated>
+  <id>http://jstdoit.github.io/</id>
+  <author>
+    <name><![CDATA[@jstdoit]]></name>
+    <email><![CDATA[just_send@163.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[configure l2tp VPN on ubuntu VPS]]></title>
+    <link href="http://jstdoit.github.io/blog/2012/11/22/l2tp-setup-on-ubuntu-vps/"/>
+    <updated>2012-11-22T02:47:00+08:00</updated>
+    <id>http://jstdoit.github.io/blog/2012/11/22/l2tp-setup-on-ubuntu-vps</id>
+    <content type="html"><![CDATA[<p>the <a href="http://google.com">Google</a> of my country is sometimes blocked, but my work need that very much. As a coder, how can I tolerate such? as a result, i started my VPN server.
+below is my way how to install l2tp/ipsec service on my vps(os backed by Ubuntu 10.04).</p>
+
+<!-- more -->
+
+
+<ul>
+<li>firstly you need the IPSec component for security or auth purpose.
+<div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>sudo aptitude install openswan
+</span></code></pre></td></tr></table></div></figure></notextile></div></li>
+<li>after install the IPSect, you need to make some change to <code>/etc/ipsec.conf</code>, you can simply change that file with content as follows:
+<div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>/etc/ipsec.conf </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>version 2.0
+</span><span class='line'>config setup
+</span><span class='line'>  <span class="nv">nat_traversal</span><span class="o">=</span>yes
+</span><span class='line'>  <span class="nv">virtual_private</span><span class="o">=</span>%v4:10.0.0.0/8,%v4:192.168.0.0/16,%v4:172.16.0.0/12
+</span><span class='line'>  <span class="nv">oe</span><span class="o">=</span>off
+</span><span class='line'>  <span class="nv">protostack</span><span class="o">=</span>netkey&lt;/li&gt;
+</span><span class='line'>&lt;/ul&gt;
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;conn L2TP-PSK-NAT&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;pre&gt;&lt;code&gt;rightsubnet<span class="o">=</span>vhost:%priv
+</span><span class='line'><span class="nv">also</span><span class="o">=</span>L2TP-PSK-noNAT
+</span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;conn L2TP-PSK-noNAT&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;pre&gt;&lt;code&gt;authby<span class="o">=</span>secret
+</span><span class='line'><span class="nv">pfs</span><span class="o">=</span>no
+</span><span class='line'><span class="nv">auto</span><span class="o">=</span>add
+</span><span class='line'><span class="nv">keyingtries</span><span class="o">=</span>3
+</span><span class='line'><span class="nv">rekey</span><span class="o">=</span>no
+</span><span class='line'><span class="nv">ikelifetime</span><span class="o">=</span>8h
+</span><span class='line'><span class="nv">keylife</span><span class="o">=</span>1h
+</span><span class='line'><span class="nb">type</span><span class="o">=</span>transport
+</span><span class='line'><span class="nv">left</span><span class="o">=</span>YOUR.SERVER.IP.ADDRESS
+</span><span class='line'><span class="nv">leftprotoport</span><span class="o">=</span>17/1701
+</span><span class='line'><span class="nv">right</span><span class="o">=</span>%any
+</span><span class='line'><span class="nv">rightprotoport</span><span class="o">=</span>17/%any
+</span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+then change the file <code>/etc/ipsec.secrets</code> with content as follows:
+<div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>/etc/ipsec.secrets</span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>YOUR.SERVER.IP.ADDRESS   %any:  PSK &amp;ldquo;YourSharedSecret&amp;rdquo;
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+<strong>Important: You should remembter to change <code>YOUR.SERVER.IP.ADDRESS</code> and <code>YourSharedSecret</code> accordingly.</strong>
+* Run the following command for <code>openswan</code> to stop complaining
+<div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="k">for </span>each in /proc/sys/net/ipv4/conf/*
+</span><span class='line'><span class="k">do</span>&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;pre&gt;&lt;code&gt;echo 0 &amp;gt; <span class="nv">$each</span>/accept_redirects
+</span><span class='line'><span class="nb">echo </span>0 &amp;gt; <span class="nv">$each</span>/send_redirects
+</span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;done
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+* Check if IPSec is correctly setup
+<div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>sudo ipsec verify
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+make sure all items are correct.</p>
+
+<ul>
+<li>now restart <code>openswan</code>
+<div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>sudo /etc/init.d/ipsec restart
+</span></code></pre></td></tr></table></div></figure></notextile></div></li>
+<li>Now you can add a L2TP/IPSec connection on your OS X and see if IPSec is working. Use whatever account and password. We are not there yet. The only thing you need to make sure is that you connect to the right server with the right shared secret as specified in <code>/etc/ipsec.secrets</code> on your server.
+Monitor /var/log/system.log on your OS X by running
+<div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>tail -f /var/log/system.log
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+while OS X is trying to connect to your server via L2TP/IPSec. It will fail eventually because we haven’t configured L2TP yet, but if you see a line in the system log saying something like
+<div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>Apr 30 18:12:48 bender pppd<span class="o">[</span>1507<span class="o">]</span>: IPSec connection established
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+Now, everything goes!</li>
+<li>Next big step is to install L2TP, execute command below to install <code>xl2tp</code> for l2tp use:
+<div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>sudo aptitude install xl2tpd
+</span></code></pre></td></tr></table></div></figure></notextile></div></li>
+<li>change the <code>/etc/xl2tpd/xl2tpd.conf</code> file with contents of :
+<div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="o">[</span>global<span class="o">]</span>
+</span><span class='line'>ipsec <span class="nv">saref</span> <span class="o">=</span> yes&lt;/li&gt;
+</span><span class='line'>&lt;/ul&gt;
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;<span class="o">[</span>lns default<span class="o">]</span>
+</span><span class='line'>ip <span class="nv">range</span> <span class="o">=</span> 10.1.2.2-10.1.2.255
+</span><span class='line'><span class="nb">local </span><span class="nv">ip</span> <span class="o">=</span> 10.1.2.1
+</span><span class='line'>refuse <span class="nv">chap</span> <span class="o">=</span> yes
+</span><span class='line'>refuse <span class="nv">pap</span> <span class="o">=</span> yes
+</span><span class='line'>require <span class="nv">authentication</span> <span class="o">=</span> yes
+</span><span class='line'>ppp <span class="nv">debug</span> <span class="o">=</span> yes
+</span><span class='line'><span class="nv">pppoptfile</span> <span class="o">=</span> /etc/ppp/options.xl2tpd
+</span><span class='line'>length <span class="nv">bit</span> <span class="o">=</span> yes
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+* now create the file <code>/etc/ppp/options.xl2tpd</code> if not exists, contents as follows:
+<div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>require-mschap-v2
+</span><span class='line'>ms-dns 8.8.8.8
+</span><span class='line'>ms-dns 8.8.4.4
+</span><span class='line'>asyncmap 0
+</span><span class='line'>auth
+</span><span class='line'>crtscts
+</span><span class='line'>lock
+</span><span class='line'>hide-password
+</span><span class='line'>modem
+</span><span class='line'>debug
+</span><span class='line'>name l2tpd
+</span><span class='line'>proxyarp
+</span><span class='line'>lcp-echo-interval 30
+</span><span class='line'>lcp-echo-failure 4
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+here we use Google Public DNS in the ms-dns field, if you prefer another one, just feel free to change that.
+* now you can add a vpn user to file <code>/etc/ppp/chap-secrets</code> and try to see if l2tp works.
+<div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;h1&gt;user      server      password            ip&lt;/h1&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;test        l2tpd       testpassword        *
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+* restart <code>xl2tpd</code> via
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>sudo /etc/init.d/xl2tpd restart</span></code></pre></td></tr></table></div></figure></notextile></div>
+* if you use iptables for firewalling, make sure it forwards packets so you can browse the Interent after connecting to VPN. Run the following command
+<div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>iptables &amp;mdash;table nat &amp;mdash;append POSTROUTING &amp;mdash;jump MASQUERADE
+</span><span class='line'><span class="nb">echo </span>1 &gt; /proc/sys/net/ipv4/ip_forward
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+* sometimes the vpn turn out to be stoped by some reasones, so create a file <code>vpn.sh</code> with content as followings and make it executable via <code>chmod u+x vpn.sh</code>
+<div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;h1&gt;!/usr/bin/env bash&lt;/h1&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;/etc/init.d/ipsec restart
+</span><span class='line'>/etc/init.d/xl2tpd restart
+</span><span class='line'>iptables &amp;mdash;table nat &amp;mdash;append POSTROUTING &amp;mdash;jump MASQUERADE
+</span><span class='line'><span class="nb">echo </span>1 &gt; /proc/sys/net/ipv4/ip_forward
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<hr />
+
+<ul>
+<li>here i capture some screenshots when i configure L2TP on my MAC.
+<img src="/images/mac01.png" title="configure l2tp server info." alt="configure l2tp on MAC" />
+<img src="/images/mac02.png" title="configure l2tp auth info." alt="configure l2tp on MAC" /></li>
+<li>and I cound a <a href="http://www.lovessh.com/windows-xp-setup-l2tp-vpn/">solution</a> on Windows xp to configure L2TP</li>
+</ul>
+
+
+<br>
+
+
+<p>Reference
+<a href="http://blog.riobard.com/2010/04/30/l2tp-over-ipsec-ubuntu">Configure L2TP/IPSec VPN on Ubuntu</a></p>
+]]></content>
+  </entry>
+  
+</feed>

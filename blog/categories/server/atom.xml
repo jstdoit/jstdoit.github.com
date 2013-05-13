@@ -1,0 +1,396 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Server | {@jstdoit}]]></title>
+  <link href="http://jstdoit.github.io/blog/categories/server/atom.xml" rel="self"/>
+  <link href="http://jstdoit.github.io/"/>
+  <updated>2013-05-13T16:57:42+08:00</updated>
+  <id>http://jstdoit.github.io/</id>
+  <author>
+    <name><![CDATA[@jstdoit]]></name>
+    <email><![CDATA[just_send@163.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Install Openfire on Ubuntu 12.04 Server]]></title>
+    <link href="http://jstdoit.github.io/blog/2012/11/30/install-openfire-on-ubuntu-12-dot-04-server/"/>
+    <updated>2012-11-30T10:35:00+08:00</updated>
+    <id>http://jstdoit.github.io/blog/2012/11/30/install-openfire-on-ubuntu-12-dot-04-server</id>
+    <content type="html"><![CDATA[<p>Wow! The vines xmpp server annoyed me so much. it&rsquo;s not implemented well, and not tested for concurrent. So i abandon it and changed to Openfire.
+when I install Openfire on My ubuntu 12.04 server, met the problem about jre, cos java is bought by Oracle and change some copyright doings, so we cannot find Sun&rsquo;s jre on Ubuntu via <code>apt-get</code> tools, after searching, i found the tool offered by <code>github</code> <a href="https://github.com/flexiondotorg/oab-java6">oab-java6</a> can easily solve the problem of Installing the sun&rsquo;s jre on ubuntu. steps as follows:</p>
+
+<!-- more -->
+
+
+<ul>
+<li><code>wget https://raw.github.com/flexiondotorg/oab-java6/master/oab-java.sh</code></li>
+<li><code>chmod +x oab-java.sh</code></li>
+<li><code>./oab-java.sh</code></li>
+<li>then we can install sun&rsquo;s jre by executing <code>sudo apt-get install sun-java6-jre</code></li>
+<li>After install jre, get <a href="http://www.igniterealtime.org/projects/openfire/index.jsp">Openfire</a> from <a href="http://www.igniterealtime.org/downloads/index.jsp">here</a>(Ubuntu&rsquo;s deb version)</li>
+<li><code>dpkg -ivh openfire_3.7.1_all.deb</code>
+the configuration of Openfire can follow <a href="http://www.igniterealtime.org/builds/openfire/docs/latest/documentation/install-guide.html">here</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[xmpp4r PUBSUB hack]]></title>
+    <link href="http://jstdoit.github.io/blog/2012/11/26/xmpp4r-pubsub-hack/"/>
+    <updated>2012-11-26T06:03:00+08:00</updated>
+    <id>http://jstdoit.github.io/blog/2012/11/26/xmpp4r-pubsub-hack</id>
+    <content type="html"><![CDATA[<p>In my current <a href="http://about.yuncaipu.com">Project</a>, I need to use XMPP sending notification to android client, so I implemented a xmpp server using <a href="http://nodejs.org">Node.js</a>,
+and using <a href="http://home.gna.org/xmpp4r/">xmpp4r-0.5</a> to login as publisher to send notification to server. They all work well before i migrated all application to new server.
+Whenever I send msg, the xmpp4r always throws exceptions. Below is the trace:</p>
+
+<!-- more -->
+
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>W, <span class="o">[</span>2012-11-26T11:59:55.734074 <span class="c">#29746]  WARN &amp;mdash; : EXCEPTION:&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'>&lt;pre&gt;&lt;code&gt;REXML::UndefinedNamespaceException
+</span><span class='line'>Undefined prefix stream found
+</span><span class='line'>/usr/local/rvm/rubies/ruby-1.9.3-p194/lib/ruby/1.9.1/rexml/parsers/baseparser.rb:406:in <span class="sb">`</span>block in pull_event<span class="s1">&#39;</span>
+</span><span class='line'><span class="s1">/usr/local/rvm/rubies/ruby-1.9.3-p194/lib/ruby/1.9.1/set.rb:222:in `block in each&#39;</span>
+</span><span class='line'>/usr/local/rvm/rubies/ruby-1.9.3-p194/lib/ruby/1.9.1/set.rb:222:in <span class="sb">`</span>each_key<span class="s1">&#39;</span>
+</span><span class='line'><span class="s1">/usr/local/rvm/rubies/ruby-1.9.3-p194/lib/ruby/1.9.1/set.rb:222:in `each&#39;</span>
+</span><span class='line'>/usr/local/rvm/rubies/ruby-1.9.3-p194/lib/ruby/1.9.1/rexml/parsers/baseparser.rb:404:in <span class="sb">`</span>pull_event<span class="s1">&#39;</span>
+</span><span class='line'><span class="s1">/usr/local/rvm/rubies/ruby-1.9.3-p194/lib/ruby/1.9.1/rexml/parsers/baseparser.rb:183:in `pull&#39;</span>
+</span><span class='line'>/usr/local/rvm/rubies/ruby-1.9.3-p194/lib/ruby/1.9.1/rexml/parsers/sax2parser.rb:92:in <span class="sb">`</span>parse<span class="s1">&#39;</span>
+</span><span class='line'><span class="s1">/usr/local/rvm/rubies/ruby-1.9.3-p194/lib/ruby/site_ruby/1.9.1/xmpp4r/streamparser.rb:79:in `parse&#39;</span>
+</span><span class='line'>/usr/local/rvm/rubies/ruby-1.9.3-p194/lib/ruby/site_ruby/1.9.1/xmpp4r/stream.rb:75:in <span class="sb">`</span>block in start<span class="s1">&#39;</span>
+</span><span class='line'><span class="s1">    W, [2012-11-26T11:59:55.734243 #29746]  WARN -- : EXCEPTION:</span>
+</span><span class='line'><span class="s1">TypeError</span>
+</span><span class='line'><span class="s1">can&#39;</span>t convert REXML::UndefinedNamespaceException into String
+</span><span class='line'>/usr/local/rvm/rubies/ruby-1.9.3-p194/lib/ruby/site_ruby/1.9.1/xmpp4r/stream.rb:137:in <span class="sb">`</span>+<span class="s1">&#39;</span>
+</span><span class='line'><span class="s1">/usr/local/rvm/rubies/ruby-1.9.3-p194/lib/ruby/site_ruby/1.9.1/xmpp4r/stream.rb:137:in `parse_failure&#39;</span>
+</span><span class='line'>/usr/local/rvm/rubies/ruby-1.9.3-p194/lib/ruby/site_ruby/1.9.1/xmpp4r/streamparser.rb:81:in <span class="sb">`</span>rescue in parse<span class="s1">&#39;</span>
+</span><span class='line'><span class="s1">/usr/local/rvm/rubies/ruby-1.9.3-p194/lib/ruby/site_ruby/1.9.1/xmpp4r/streamparser.rb:38:in `parse&#39;</span>
+</span><span class='line'>/usr/local/rvm/rubies/ruby-1.9.3-p194/lib/ruby/site_ruby/1.9.1/xmpp4r/stream.rb:75:in <span class="sb">`</span>block in start<span class="s1">&#39;</span>
+</span><span class='line'><span class="s1">    W, [2012-11-26T11:59:55.734326 #29746]  WARN -- : Exception caught in Parser thread! (TypeError)</span>
+</span><span class='line'><span class="s1">/usr/local/rvm/rubies/ruby-1.9.3-p194/lib/ruby/site_ruby/1.9.1/xmpp4r/stream.rb:137:in `+&#39;</span>
+</span><span class='line'>/usr/local/rvm/rubies/ruby-1.9.3-p194/lib/ruby/site_ruby/1.9.1/xmpp4r/stream.rb:137:in <span class="sb">`</span>parse_failure<span class="s1">&#39;</span>
+</span><span class='line'><span class="s1">/usr/local/rvm/rubies/ruby-1.9.3-p194/lib/ruby/site_ruby/1.9.1/xmpp4r/streamparser.rb:81:in `rescue in parse&#39;</span>
+</span><span class='line'>/usr/local/rvm/rubies/ruby-1.9.3-p194/lib/ruby/site_ruby/1.9.1/xmpp4r/streamparser.rb:38:in <span class="sb">`</span>parse<span class="s1">&#39;</span>
+</span><span class='line'><span class="s1">/usr/local/rvm/rubies/ruby-1.9.3-p194/lib/ruby/site_ruby/1.9.1/xmpp4r/stream.rb:75:in `block in start&#39;</span>
+</span><span class='line'>/usr/local/rvm/rubies/ruby-1.9.3-p194/lib/ruby/1.9.1/thread.rb:71:in <span class="sb">`</span>sleep<span class="s1">&#39;: deadlock detected (fatal)</span>
+</span><span class='line'><span class="s1">from /usr/local/rvm/rubies/ruby-1.9.3-p194/lib/ruby/1.9.1/thread.rb:71:in `wait&#39;</span>
+</span><span class='line'>from /usr/local/rvm/rubies/ruby-1.9.3-p194/lib/ruby/site_ruby/1.9.1/xmpp4r/semaphore.rb:24:in <span class="sb">`</span>block in <span class="nb">wait</span><span class="s1">&#39;</span>
+</span><span class='line'><span class="s1">from &amp;lt;internal:prelude&amp;gt;:10:in `synchronize&#39;</span>
+</span><span class='line'>from /usr/local/rvm/rubies/ruby-1.9.3-p194/lib/ruby/site_ruby/1.9.1/xmpp4r/semaphore.rb:23:in <span class="sb">`</span><span class="nb">wait</span><span class="s1">&#39;</span>
+</span><span class='line'><span class="s1">from /usr/local/rvm/rubies/ruby-1.9.3-p194/lib/ruby/site_ruby/1.9.1/xmpp4r/stream.rb:331:in `wait&#39;</span>
+</span><span class='line'>from /usr/local/rvm/rubies/ruby-1.9.3-p194/lib/ruby/site_ruby/1.9.1/xmpp4r/stream.rb:398:in <span class="sb">`</span>send<span class="s1">&#39;</span>
+</span><span class='line'><span class="s1">from /usr/local/rvm/rubies/ruby-1.9.3-p194/lib/ruby/site_ruby/1.9.1/xmpp4r/client.rb:88:in `start&#39;</span>
+</span><span class='line'>from /usr/local/rvm/rubies/ruby-1.9.3-p194/lib/ruby/site_ruby/1.9.1/xmpp4r/client.rb:175:in <span class="sb">`</span>auth_sasl<span class="s1">&#39;</span>
+</span><span class='line'><span class="s1">from /usr/local/rvm/rubies/ruby-1.9.3-p194/lib/ruby/site_ruby/1.9.1/xmpp4r/client.rb:112:in `auth&#39;</span>
+</span><span class='line'>from ./pub-just:18:in <span class="sb">`</span>&amp;lt;main&amp;gt;<span class="err">&#39;</span>
+</span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+Of course I don&rsquo;t think that Ruby&rsquo;s sax2parser makes my app go wrong. So I checked the xmpp4r&rsquo;s code. From the exception , i can find that tha problem occurs after the <code>auth</code> stanza,
+then I checked the src-code from <code>XMPP4R_GEM_PATH/client.rb</code>, and find the code after auth.
+<div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>&ldquo;XMPP4R_GEM_PATH/client.rb&rdquo; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">auth_sasl</span><span class="p">(</span><span class="n">sasl</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span><span class="o">&lt;</span><span class="sr">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="sr">&lt;pre&gt;&lt;code&gt;sasl.auth(password)</span>
+</span><span class='line'><span class="sr"># Restart stream after SASL auth</span>
+</span><span class='line'><span class="sr">stop</span>
+</span><span class='line'><span class="sr">start</span>
+</span><span class='line'><span class="sr"># And wait for features - again</span>
+</span><span class='line'><span class="sr">@features_sem.wait</span>
+</span><span class='line'>
+</span><span class='line'><span class="sr"># Resource binding (RFC3920 - 7)</span>
+</span><span class='line'><span class="sr">if @stream_features.has_key? &#39;bind&#39;</span>
+</span><span class='line'><span class="sr">    @jid = bind(@jid.resource)</span>
+</span><span class='line'><span class="sr">end </span>
+</span><span class='line'>
+</span><span class='line'><span class="sr"># Session starting</span>
+</span><span class='line'><span class="sr">if @stream_features.has_key? &#39;session&#39;</span>
+</span><span class='line'><span class="sr">    iq = Iq.new(:set)</span>
+</span><span class='line'><span class="sr">    session = iq.add REXML::Element.new(&#39;session&#39;)</span>
+</span><span class='line'><span class="sr">    session.add_namespace @stream_features[&#39;session&#39;]</span>
+</span><span class='line'>
+</span><span class='line'><span class="sr">    send_with_id(iq)</span>
+</span><span class='line'><span class="sr">end </span>
+</span><span class='line'><span class="sr">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;</span><span class="sr">/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="sr">&lt;p&gt;end</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+there is one <code>stop</code> and <code>start</code> after auth. So I traced the <code>stop</code> and <code>start</code>, and found the <code>stop</code> implemented in file <code>XMPP4R_GEM_PATH/stream.rb</code> as follows:
+<div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>&ldquo;XMPP4R_GEM_PATH/stream.rb&rdquo; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">stop</span><span class="o">&lt;</span><span class="sr">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="sr">&lt;pre&gt;&lt;code&gt;@parser_thread.kill</span>
+</span><span class='line'><span class="sr">@parser = nil </span>
+</span><span class='line'><span class="sr">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;</span><span class="sr">/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="sr">&lt;p&gt;end</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+and the <code>@parser_thread</code> is obviously a Thread, so the problem must be caused by the thread&rsquo;s mech, it must be when the thread&rsquo;s not being killed entirely we call the method <code>start</code>, so I hacked the code via add a line <code>while @parser_thread.alive? do end</code> and modify the code above in file <code>XMPP4R_GEM_PATH/client.rb</code> as follows:
+<div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>&ldquo;XMPP4R_GEM_PATH/client.rb&rdquo; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">auth_sasl</span><span class="p">(</span><span class="n">sasl</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span><span class="o">&lt;</span><span class="sr">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="sr">&lt;pre&gt;&lt;code&gt;sasl.auth(password)</span>
+</span><span class='line'><span class="sr"># Restart stream after SASL auth</span>
+</span><span class='line'><span class="sr">stop</span>
+</span><span class='line'><span class="sr">while @parser_thread.alive? do </span>
+</span><span class='line'><span class="sr">end</span>
+</span><span class='line'><span class="sr">start</span>
+</span><span class='line'><span class="sr"># And wait for features - again</span>
+</span><span class='line'><span class="sr">@features_sem.wait</span>
+</span><span class='line'>
+</span><span class='line'><span class="sr"># Resource binding (RFC3920 - 7)</span>
+</span><span class='line'><span class="sr">if @stream_features.has_key? &#39;bind&#39;</span>
+</span><span class='line'><span class="sr">    @jid = bind(@jid.resource)</span>
+</span><span class='line'><span class="sr">end </span>
+</span><span class='line'>
+</span><span class='line'><span class="sr"># Session starting</span>
+</span><span class='line'><span class="sr">if @stream_features.has_key? &#39;session&#39;</span>
+</span><span class='line'><span class="sr">    iq = Iq.new(:set)</span>
+</span><span class='line'><span class="sr">    session = iq.add REXML::Element.new(&#39;session&#39;)</span>
+</span><span class='line'><span class="sr">    session.add_namespace @stream_features[&#39;session&#39;]</span>
+</span><span class='line'>
+</span><span class='line'><span class="sr">    send_with_id(iq)</span>
+</span><span class='line'><span class="sr">end </span>
+</span><span class='line'><span class="sr">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;</span><span class="sr">/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="sr">&lt;p&gt;end</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+Until now, my code is working normally, hope this help you someday.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Sync Data Between Servers]]></title>
+    <link href="http://jstdoit.github.io/blog/2012/11/23/sync-data-between-servers/"/>
+    <updated>2012-11-23T10:51:00+08:00</updated>
+    <id>http://jstdoit.github.io/blog/2012/11/23/sync-data-between-servers</id>
+    <content type="html"><![CDATA[<p>Finishing configuring the new server, i need to migrate all business-data from prev-server to the new one.
+Wow! I think I don&rsquo;t know how to sync data realtime between servers, so I just <code>scp -r</code> all the data to the
+new server&hellip; ehh, I know it&rsquo;s now a good solution, but i don&rsquo;t know how.</p>
+
+<!-- more -->
+
+
+<p><img src="/images/scp-ss.png" title="Screenshot for scp" alt="screenshot" /></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Switch to RedHat 5.4]]></title>
+    <link href="http://jstdoit.github.io/blog/2012/11/22/switch-to-redhat/"/>
+    <updated>2012-11-22T15:45:00+08:00</updated>
+    <id>http://jstdoit.github.io/blog/2012/11/22/switch-to-redhat</id>
+    <content type="html"><![CDATA[<p>these days, my boss asked me to transfer all our application to a server backed by RedHat 5.4 from Ubuntu, what a mass!
+these is no <code>apt</code> tools anymore on the new server, i just cannot adapt my life to next days without <code>apt</code> tools. Whatever, i need to install these software:
+<code>git</code>, <code>nodejs</code>, <code>ruby</code>, <code>nginx with passenger</code> for rails' deploy&hellip;</p>
+
+<!-- more -->
+
+
+<ul>
+<li>all things goes fine, but the when i run <code>gem</code>, it alerts me with msg <code>It seems your ruby installation is missing psych (for YAML output). To eliminate this warning, please install libyaml and reinstall your ruby.</code>, ooooh! i never met such problem on Ubuntu&hellip;
+I found that <code>rvm</code> gives me an option for install <code>libyaml</code> by running <code>rvm pkg install libyaml</code>, then <code>rvm reinstall 1.9.3</code>, but warning still exists.
+:&ndash;( then I should abandon the RVM, and install ruby via src-code.</li>
+<li>first install <code>libyaml</code>
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ wget &lt;a href="http://pyyaml.org/download/libyaml/yaml-0.1.4.tar.gz">http://pyyaml.org/download/libyaml/yaml-0.1.4.tar.gz&lt;/a>
+</span><span class='line'>$ tar xzvf yaml-0.1.4.tar.gz
+</span><span class='line'>$ cd yaml-0.1.4
+</span><span class='line'>$ ./configure &mdash;prefix=/usr/local
+</span><span class='line'>$ make
+</span><span class='line'>$ make install</span></code></pre></td></tr></table></div></figure></notextile></div></li>
+<li>then install <code>ruby</code>
+<div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>wget &lt;a <span class="nv">href</span><span class="o">=</span><span class="s2">&quot;http://ftp.ruby-lang.org/pub/ruby/1.9/ruby-1.9.3-p0.tar.gz&quot;</span>&gt;http://ftp.ruby-lang.org/pub/ruby/1.9/ruby-1.9.3-p0.tar.gz&lt;/a&gt;
+</span><span class='line'><span class="nv">$ </span>tar xzvf ruby-1.9.3-p0.tar.gz
+</span><span class='line'><span class="nv">$ </span><span class="nb">cd </span>ruby-1.9.3-p0
+</span><span class='line'><span class="nv">$ </span>./configure &amp;mdash;prefix<span class="o">=</span>/usr/local &amp;mdash;enable-shared &amp;mdash;disable-install-doc &amp;mdash;with-opt-dir<span class="o">=</span>/usr/local/lib
+</span><span class='line'><span class="nv">$ </span>make
+</span><span class='line'><span class="nv">$ </span>make install
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+Finally, the world is clear!</li>
+</ul>
+
+
+<hr />
+
+<p>Next to install rmagick, when i execute following command: <code>yum install ImageMagick-devel ImageMagick-c++-devel</code>, my system alerts me with msg <code>Warning: Found a partial ImageMagick installation. Your operating system likely has some built-in ImageMagick libraries but not all of ImageMagick. This will most likely cause problems at both compile and runtime.</code> it seems that the the <code>ImageMagick</code> version was to old on RedHat 5.4, after searching the web, i found <a href="https://github.com/hammackj/risu/issues/55">Solve</a>, and commands as follows:
+<div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>yum remove ImageMagick
+</span><span class='line'>wget &lt;a <span class="nv">href</span><span class="o">=</span><span class="s2">&quot;ftp://ftp.imagemagick.org/pub/ImageMagick/ImageMagick.tar.gz&quot;</span>&gt;ftp://ftp.imagemagick.org/pub/ImageMagick/ImageMagick.tar.gz&lt;/a&gt;
+</span><span class='line'>tar -zxvf Imagemagick.tar.gz
+</span><span class='line'><span class="nb">cd </span>Imagemagick-6.7.6-8
+</span><span class='line'>./configure; make; make install&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;Then i got the problem magickwand.h not found or w.e. So i did
+</span><span class='line'><span class="nv">PKG_CONFIG_PATH</span><span class="o">=</span>/usr/local/lib/pkgconfig/ gem install rmagick
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+things work fine now.</p>
+
+<hr />
+
+<ul>
+<li>i got a problem on how to open a port on Red Hat 5.4, finally i found the <a href="http://www.cyberciti.biz/faq/howto-rhel-linux-open-port-using-iptables/">solution</a>
+<div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>vi /etc/sysconfig/iptables
+</span><span class='line'>&amp;hellip;do sth. here
+</span><span class='line'>/etc/init.d/iptables restart
+</span></code></pre></td></tr></table></div></figure></notextile></div></li>
+</ul>
+
+
+<hr />
+
+<ul>
+<li>another problem, the version of vim installed on Redhat 5.4 is 7.0, but i want version 7.3, but the repo in system is only 7.0, so i have to compile vim from source.
+<div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>wget &lt;a <span class="nv">href</span><span class="o">=</span><span class="s2">&quot;ftp://ftp.vim.org/pub/vim/unix/vim-7.3.tar.bz2&quot;</span>&gt;ftp://ftp.vim.org/pub/vim/unix/vim-7.3.tar.bz2&lt;/a&gt;
+</span><span class='line'>tar jxf vim-7.3.tar.bz2
+</span><span class='line'><span class="nb">cd </span>vim73
+</span><span class='line'>./configure &amp;mdash;enable-cscope &amp;mdash;enable-multibyte &amp;mdash;enable-xim &amp;mdash;enable-fontset &amp;mdash;with-features<span class="o">=</span>huge
+</span><span class='line'>make;make install
+</span><span class='line'>ln -sf &lt;code&gt;which vim&lt;/code&gt; /bin/vi
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+Fine, the vim 7.3 is installed, and you will find the syntax highlight and other vim-features now work.</li>
+</ul>
+
+
+<hr />
+
+<ul>
+<li>tip: you can execute <code>bundle exec gem uninstall mysql2</code> to remove gem in local vendor.</li>
+</ul>
+
+]]></content>
+  </entry>
+  
+</feed>

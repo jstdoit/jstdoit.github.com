@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Ruby | {@jstdoit}]]></title>
+  <link href="http://jstdoit.github.io/blog/categories/ruby/atom.xml" rel="self"/>
+  <link href="http://jstdoit.github.io/"/>
+  <updated>2013-05-13T16:57:42+08:00</updated>
+  <id>http://jstdoit.github.io/</id>
+  <author>
+    <name><![CDATA[@jstdoit]]></name>
+    <email><![CDATA[just_send@163.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[xmpp4r PUBSUB hack]]></title>
+    <link href="http://jstdoit.github.io/blog/2012/11/26/xmpp4r-pubsub-hack/"/>
+    <updated>2012-11-26T06:03:00+08:00</updated>
+    <id>http://jstdoit.github.io/blog/2012/11/26/xmpp4r-pubsub-hack</id>
+    <content type="html"><![CDATA[<p>In my current <a href="http://about.yuncaipu.com">Project</a>, I need to use XMPP sending notification to android client, so I implemented a xmpp server using <a href="http://nodejs.org">Node.js</a>,
+and using <a href="http://home.gna.org/xmpp4r/">xmpp4r-0.5</a> to login as publisher to send notification to server. They all work well before i migrated all application to new server.
+Whenever I send msg, the xmpp4r always throws exceptions. Below is the trace:</p>
+
+<!-- more -->
+
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>W, <span class="o">[</span>2012-11-26T11:59:55.734074 <span class="c">#29746]  WARN &amp;mdash; : EXCEPTION:&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'>&lt;pre&gt;&lt;code&gt;REXML::UndefinedNamespaceException
+</span><span class='line'>Undefined prefix stream found
+</span><span class='line'>/usr/local/rvm/rubies/ruby-1.9.3-p194/lib/ruby/1.9.1/rexml/parsers/baseparser.rb:406:in <span class="sb">`</span>block in pull_event<span class="s1">&#39;</span>
+</span><span class='line'><span class="s1">/usr/local/rvm/rubies/ruby-1.9.3-p194/lib/ruby/1.9.1/set.rb:222:in `block in each&#39;</span>
+</span><span class='line'>/usr/local/rvm/rubies/ruby-1.9.3-p194/lib/ruby/1.9.1/set.rb:222:in <span class="sb">`</span>each_key<span class="s1">&#39;</span>
+</span><span class='line'><span class="s1">/usr/local/rvm/rubies/ruby-1.9.3-p194/lib/ruby/1.9.1/set.rb:222:in `each&#39;</span>
+</span><span class='line'>/usr/local/rvm/rubies/ruby-1.9.3-p194/lib/ruby/1.9.1/rexml/parsers/baseparser.rb:404:in <span class="sb">`</span>pull_event<span class="s1">&#39;</span>
+</span><span class='line'><span class="s1">/usr/local/rvm/rubies/ruby-1.9.3-p194/lib/ruby/1.9.1/rexml/parsers/baseparser.rb:183:in `pull&#39;</span>
+</span><span class='line'>/usr/local/rvm/rubies/ruby-1.9.3-p194/lib/ruby/1.9.1/rexml/parsers/sax2parser.rb:92:in <span class="sb">`</span>parse<span class="s1">&#39;</span>
+</span><span class='line'><span class="s1">/usr/local/rvm/rubies/ruby-1.9.3-p194/lib/ruby/site_ruby/1.9.1/xmpp4r/streamparser.rb:79:in `parse&#39;</span>
+</span><span class='line'>/usr/local/rvm/rubies/ruby-1.9.3-p194/lib/ruby/site_ruby/1.9.1/xmpp4r/stream.rb:75:in <span class="sb">`</span>block in start<span class="s1">&#39;</span>
+</span><span class='line'><span class="s1">    W, [2012-11-26T11:59:55.734243 #29746]  WARN -- : EXCEPTION:</span>
+</span><span class='line'><span class="s1">TypeError</span>
+</span><span class='line'><span class="s1">can&#39;</span>t convert REXML::UndefinedNamespaceException into String
+</span><span class='line'>/usr/local/rvm/rubies/ruby-1.9.3-p194/lib/ruby/site_ruby/1.9.1/xmpp4r/stream.rb:137:in <span class="sb">`</span>+<span class="s1">&#39;</span>
+</span><span class='line'><span class="s1">/usr/local/rvm/rubies/ruby-1.9.3-p194/lib/ruby/site_ruby/1.9.1/xmpp4r/stream.rb:137:in `parse_failure&#39;</span>
+</span><span class='line'>/usr/local/rvm/rubies/ruby-1.9.3-p194/lib/ruby/site_ruby/1.9.1/xmpp4r/streamparser.rb:81:in <span class="sb">`</span>rescue in parse<span class="s1">&#39;</span>
+</span><span class='line'><span class="s1">/usr/local/rvm/rubies/ruby-1.9.3-p194/lib/ruby/site_ruby/1.9.1/xmpp4r/streamparser.rb:38:in `parse&#39;</span>
+</span><span class='line'>/usr/local/rvm/rubies/ruby-1.9.3-p194/lib/ruby/site_ruby/1.9.1/xmpp4r/stream.rb:75:in <span class="sb">`</span>block in start<span class="s1">&#39;</span>
+</span><span class='line'><span class="s1">    W, [2012-11-26T11:59:55.734326 #29746]  WARN -- : Exception caught in Parser thread! (TypeError)</span>
+</span><span class='line'><span class="s1">/usr/local/rvm/rubies/ruby-1.9.3-p194/lib/ruby/site_ruby/1.9.1/xmpp4r/stream.rb:137:in `+&#39;</span>
+</span><span class='line'>/usr/local/rvm/rubies/ruby-1.9.3-p194/lib/ruby/site_ruby/1.9.1/xmpp4r/stream.rb:137:in <span class="sb">`</span>parse_failure<span class="s1">&#39;</span>
+</span><span class='line'><span class="s1">/usr/local/rvm/rubies/ruby-1.9.3-p194/lib/ruby/site_ruby/1.9.1/xmpp4r/streamparser.rb:81:in `rescue in parse&#39;</span>
+</span><span class='line'>/usr/local/rvm/rubies/ruby-1.9.3-p194/lib/ruby/site_ruby/1.9.1/xmpp4r/streamparser.rb:38:in <span class="sb">`</span>parse<span class="s1">&#39;</span>
+</span><span class='line'><span class="s1">/usr/local/rvm/rubies/ruby-1.9.3-p194/lib/ruby/site_ruby/1.9.1/xmpp4r/stream.rb:75:in `block in start&#39;</span>
+</span><span class='line'>/usr/local/rvm/rubies/ruby-1.9.3-p194/lib/ruby/1.9.1/thread.rb:71:in <span class="sb">`</span>sleep<span class="s1">&#39;: deadlock detected (fatal)</span>
+</span><span class='line'><span class="s1">from /usr/local/rvm/rubies/ruby-1.9.3-p194/lib/ruby/1.9.1/thread.rb:71:in `wait&#39;</span>
+</span><span class='line'>from /usr/local/rvm/rubies/ruby-1.9.3-p194/lib/ruby/site_ruby/1.9.1/xmpp4r/semaphore.rb:24:in <span class="sb">`</span>block in <span class="nb">wait</span><span class="s1">&#39;</span>
+</span><span class='line'><span class="s1">from &amp;lt;internal:prelude&amp;gt;:10:in `synchronize&#39;</span>
+</span><span class='line'>from /usr/local/rvm/rubies/ruby-1.9.3-p194/lib/ruby/site_ruby/1.9.1/xmpp4r/semaphore.rb:23:in <span class="sb">`</span><span class="nb">wait</span><span class="s1">&#39;</span>
+</span><span class='line'><span class="s1">from /usr/local/rvm/rubies/ruby-1.9.3-p194/lib/ruby/site_ruby/1.9.1/xmpp4r/stream.rb:331:in `wait&#39;</span>
+</span><span class='line'>from /usr/local/rvm/rubies/ruby-1.9.3-p194/lib/ruby/site_ruby/1.9.1/xmpp4r/stream.rb:398:in <span class="sb">`</span>send<span class="s1">&#39;</span>
+</span><span class='line'><span class="s1">from /usr/local/rvm/rubies/ruby-1.9.3-p194/lib/ruby/site_ruby/1.9.1/xmpp4r/client.rb:88:in `start&#39;</span>
+</span><span class='line'>from /usr/local/rvm/rubies/ruby-1.9.3-p194/lib/ruby/site_ruby/1.9.1/xmpp4r/client.rb:175:in <span class="sb">`</span>auth_sasl<span class="s1">&#39;</span>
+</span><span class='line'><span class="s1">from /usr/local/rvm/rubies/ruby-1.9.3-p194/lib/ruby/site_ruby/1.9.1/xmpp4r/client.rb:112:in `auth&#39;</span>
+</span><span class='line'>from ./pub-just:18:in <span class="sb">`</span>&amp;lt;main&amp;gt;<span class="err">&#39;</span>
+</span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+Of course I don&rsquo;t think that Ruby&rsquo;s sax2parser makes my app go wrong. So I checked the xmpp4r&rsquo;s code. From the exception , i can find that tha problem occurs after the <code>auth</code> stanza,
+then I checked the src-code from <code>XMPP4R_GEM_PATH/client.rb</code>, and find the code after auth.
+<div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>&ldquo;XMPP4R_GEM_PATH/client.rb&rdquo; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">auth_sasl</span><span class="p">(</span><span class="n">sasl</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span><span class="o">&lt;</span><span class="sr">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="sr">&lt;pre&gt;&lt;code&gt;sasl.auth(password)</span>
+</span><span class='line'><span class="sr"># Restart stream after SASL auth</span>
+</span><span class='line'><span class="sr">stop</span>
+</span><span class='line'><span class="sr">start</span>
+</span><span class='line'><span class="sr"># And wait for features - again</span>
+</span><span class='line'><span class="sr">@features_sem.wait</span>
+</span><span class='line'>
+</span><span class='line'><span class="sr"># Resource binding (RFC3920 - 7)</span>
+</span><span class='line'><span class="sr">if @stream_features.has_key? &#39;bind&#39;</span>
+</span><span class='line'><span class="sr">    @jid = bind(@jid.resource)</span>
+</span><span class='line'><span class="sr">end </span>
+</span><span class='line'>
+</span><span class='line'><span class="sr"># Session starting</span>
+</span><span class='line'><span class="sr">if @stream_features.has_key? &#39;session&#39;</span>
+</span><span class='line'><span class="sr">    iq = Iq.new(:set)</span>
+</span><span class='line'><span class="sr">    session = iq.add REXML::Element.new(&#39;session&#39;)</span>
+</span><span class='line'><span class="sr">    session.add_namespace @stream_features[&#39;session&#39;]</span>
+</span><span class='line'>
+</span><span class='line'><span class="sr">    send_with_id(iq)</span>
+</span><span class='line'><span class="sr">end </span>
+</span><span class='line'><span class="sr">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;</span><span class="sr">/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="sr">&lt;p&gt;end</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+there is one <code>stop</code> and <code>start</code> after auth. So I traced the <code>stop</code> and <code>start</code>, and found the <code>stop</code> implemented in file <code>XMPP4R_GEM_PATH/stream.rb</code> as follows:
+<div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>&ldquo;XMPP4R_GEM_PATH/stream.rb&rdquo; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">stop</span><span class="o">&lt;</span><span class="sr">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="sr">&lt;pre&gt;&lt;code&gt;@parser_thread.kill</span>
+</span><span class='line'><span class="sr">@parser = nil </span>
+</span><span class='line'><span class="sr">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;</span><span class="sr">/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="sr">&lt;p&gt;end</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+and the <code>@parser_thread</code> is obviously a Thread, so the problem must be caused by the thread&rsquo;s mech, it must be when the thread&rsquo;s not being killed entirely we call the method <code>start</code>, so I hacked the code via add a line <code>while @parser_thread.alive? do end</code> and modify the code above in file <code>XMPP4R_GEM_PATH/client.rb</code> as follows:
+<div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>&ldquo;XMPP4R_GEM_PATH/client.rb&rdquo; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">auth_sasl</span><span class="p">(</span><span class="n">sasl</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span><span class="o">&lt;</span><span class="sr">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="sr">&lt;pre&gt;&lt;code&gt;sasl.auth(password)</span>
+</span><span class='line'><span class="sr"># Restart stream after SASL auth</span>
+</span><span class='line'><span class="sr">stop</span>
+</span><span class='line'><span class="sr">while @parser_thread.alive? do </span>
+</span><span class='line'><span class="sr">end</span>
+</span><span class='line'><span class="sr">start</span>
+</span><span class='line'><span class="sr"># And wait for features - again</span>
+</span><span class='line'><span class="sr">@features_sem.wait</span>
+</span><span class='line'>
+</span><span class='line'><span class="sr"># Resource binding (RFC3920 - 7)</span>
+</span><span class='line'><span class="sr">if @stream_features.has_key? &#39;bind&#39;</span>
+</span><span class='line'><span class="sr">    @jid = bind(@jid.resource)</span>
+</span><span class='line'><span class="sr">end </span>
+</span><span class='line'>
+</span><span class='line'><span class="sr"># Session starting</span>
+</span><span class='line'><span class="sr">if @stream_features.has_key? &#39;session&#39;</span>
+</span><span class='line'><span class="sr">    iq = Iq.new(:set)</span>
+</span><span class='line'><span class="sr">    session = iq.add REXML::Element.new(&#39;session&#39;)</span>
+</span><span class='line'><span class="sr">    session.add_namespace @stream_features[&#39;session&#39;]</span>
+</span><span class='line'>
+</span><span class='line'><span class="sr">    send_with_id(iq)</span>
+</span><span class='line'><span class="sr">end </span>
+</span><span class='line'><span class="sr">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;</span><span class="sr">/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="sr">&lt;p&gt;end</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+Until now, my code is working normally, hope this help you someday.</p>
+]]></content>
+  </entry>
+  
+</feed>

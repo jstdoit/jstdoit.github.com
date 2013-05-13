@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Openfire | {@jstdoit}]]></title>
+  <link href="http://jstdoit.github.io/blog/categories/openfire/atom.xml" rel="self"/>
+  <link href="http://jstdoit.github.io/"/>
+  <updated>2013-05-13T16:57:42+08:00</updated>
+  <id>http://jstdoit.github.io/</id>
+  <author>
+    <name><![CDATA[@jstdoit]]></name>
+    <email><![CDATA[just_send@163.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Install Openfire on Ubuntu 12.04 Server]]></title>
+    <link href="http://jstdoit.github.io/blog/2012/11/30/install-openfire-on-ubuntu-12-dot-04-server/"/>
+    <updated>2012-11-30T10:35:00+08:00</updated>
+    <id>http://jstdoit.github.io/blog/2012/11/30/install-openfire-on-ubuntu-12-dot-04-server</id>
+    <content type="html"><![CDATA[<p>Wow! The vines xmpp server annoyed me so much. it&rsquo;s not implemented well, and not tested for concurrent. So i abandon it and changed to Openfire.
+when I install Openfire on My ubuntu 12.04 server, met the problem about jre, cos java is bought by Oracle and change some copyright doings, so we cannot find Sun&rsquo;s jre on Ubuntu via <code>apt-get</code> tools, after searching, i found the tool offered by <code>github</code> <a href="https://github.com/flexiondotorg/oab-java6">oab-java6</a> can easily solve the problem of Installing the sun&rsquo;s jre on ubuntu. steps as follows:</p>
+
+<!-- more -->
+
+
+<ul>
+<li><code>wget https://raw.github.com/flexiondotorg/oab-java6/master/oab-java.sh</code></li>
+<li><code>chmod +x oab-java.sh</code></li>
+<li><code>./oab-java.sh</code></li>
+<li>then we can install sun&rsquo;s jre by executing <code>sudo apt-get install sun-java6-jre</code></li>
+<li>After install jre, get <a href="http://www.igniterealtime.org/projects/openfire/index.jsp">Openfire</a> from <a href="http://www.igniterealtime.org/downloads/index.jsp">here</a>(Ubuntu&rsquo;s deb version)</li>
+<li><code>dpkg -ivh openfire_3.7.1_all.deb</code>
+the configuration of Openfire can follow <a href="http://www.igniterealtime.org/builds/openfire/docs/latest/documentation/install-guide.html">here</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+</feed>

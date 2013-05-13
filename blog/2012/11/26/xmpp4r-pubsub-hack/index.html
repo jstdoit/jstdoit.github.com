@@ -1,0 +1,481 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>xmpp4r PUBSUB hack - {@jstdoit}</title>
+  <meta name="author" content="@jstdoit">
+
+  
+  <meta name="description" content="In my current Project, I need to use XMPP sending notification to android client, so I implemented a xmpp server using Node.js,
+and using xmpp4r-0.5 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://jstdoit.github.io/blog/2012/11/26/xmpp4r-pubsub-hack">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="{@jstdoit}" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-36535548-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">{@jstdoit}</a></h1>
+  
+    <h2>A blog for {@jstdoit}</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:jstdoit.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/about">About</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Xmpp4r PUBSUB Hack</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-11-26T06:03:00+08:00" pubdate data-updated="true">Nov 26<span>th</span>, 2012</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>In my current <a href="http://about.yuncaipu.com">Project</a>, I need to use XMPP sending notification to android client, so I implemented a xmpp server using <a href="http://nodejs.org">Node.js</a>,
+and using <a href="http://home.gna.org/xmpp4r/">xmpp4r-0.5</a> to login as publisher to send notification to server. They all work well before i migrated all application to new server.
+Whenever I send msg, the xmpp4r always throws exceptions. Below is the trace:</p>
+
+<!-- more -->
+
+
+
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>W, <span class="o">[</span>2012-11-26T11:59:55.734074 <span class="c">#29746]  WARN -- : EXCEPTION:</span>
+</span><span class='line'>    REXML::UndefinedNamespaceException
+</span><span class='line'>    Undefined prefix stream found
+</span><span class='line'>    /usr/local/rvm/rubies/ruby-1.9.3-p194/lib/ruby/1.9.1/rexml/parsers/baseparser.rb:406:in <span class="sb">`</span>block in pull_event<span class="s1">&#39;</span>
+</span><span class='line'><span class="s1">    /usr/local/rvm/rubies/ruby-1.9.3-p194/lib/ruby/1.9.1/set.rb:222:in `block in each&#39;</span>
+</span><span class='line'>    /usr/local/rvm/rubies/ruby-1.9.3-p194/lib/ruby/1.9.1/set.rb:222:in <span class="sb">`</span>each_key<span class="s1">&#39;</span>
+</span><span class='line'><span class="s1">    /usr/local/rvm/rubies/ruby-1.9.3-p194/lib/ruby/1.9.1/set.rb:222:in `each&#39;</span>
+</span><span class='line'>    /usr/local/rvm/rubies/ruby-1.9.3-p194/lib/ruby/1.9.1/rexml/parsers/baseparser.rb:404:in <span class="sb">`</span>pull_event<span class="s1">&#39;</span>
+</span><span class='line'><span class="s1">    /usr/local/rvm/rubies/ruby-1.9.3-p194/lib/ruby/1.9.1/rexml/parsers/baseparser.rb:183:in `pull&#39;</span>
+</span><span class='line'>    /usr/local/rvm/rubies/ruby-1.9.3-p194/lib/ruby/1.9.1/rexml/parsers/sax2parser.rb:92:in <span class="sb">`</span>parse<span class="s1">&#39;</span>
+</span><span class='line'><span class="s1">    /usr/local/rvm/rubies/ruby-1.9.3-p194/lib/ruby/site_ruby/1.9.1/xmpp4r/streamparser.rb:79:in `parse&#39;</span>
+</span><span class='line'>    /usr/local/rvm/rubies/ruby-1.9.3-p194/lib/ruby/site_ruby/1.9.1/xmpp4r/stream.rb:75:in <span class="sb">`</span>block in start<span class="s1">&#39;</span>
+</span><span class='line'><span class="s1">     W, [2012-11-26T11:59:55.734243 #29746]  WARN -- : EXCEPTION:</span>
+</span><span class='line'><span class="s1">    TypeError</span>
+</span><span class='line'><span class="s1">    can&#39;</span>t convert REXML::UndefinedNamespaceException into String
+</span><span class='line'>    /usr/local/rvm/rubies/ruby-1.9.3-p194/lib/ruby/site_ruby/1.9.1/xmpp4r/stream.rb:137:in <span class="sb">`</span>+<span class="s1">&#39;</span>
+</span><span class='line'><span class="s1">    /usr/local/rvm/rubies/ruby-1.9.3-p194/lib/ruby/site_ruby/1.9.1/xmpp4r/stream.rb:137:in `parse_failure&#39;</span>
+</span><span class='line'>    /usr/local/rvm/rubies/ruby-1.9.3-p194/lib/ruby/site_ruby/1.9.1/xmpp4r/streamparser.rb:81:in <span class="sb">`</span>rescue in parse<span class="s1">&#39;</span>
+</span><span class='line'><span class="s1">    /usr/local/rvm/rubies/ruby-1.9.3-p194/lib/ruby/site_ruby/1.9.1/xmpp4r/streamparser.rb:38:in `parse&#39;</span>
+</span><span class='line'>    /usr/local/rvm/rubies/ruby-1.9.3-p194/lib/ruby/site_ruby/1.9.1/xmpp4r/stream.rb:75:in <span class="sb">`</span>block in start<span class="s1">&#39;</span>
+</span><span class='line'><span class="s1">     W, [2012-11-26T11:59:55.734326 #29746]  WARN -- : Exception caught in Parser thread! (TypeError)</span>
+</span><span class='line'><span class="s1">    /usr/local/rvm/rubies/ruby-1.9.3-p194/lib/ruby/site_ruby/1.9.1/xmpp4r/stream.rb:137:in `+&#39;</span>
+</span><span class='line'>    /usr/local/rvm/rubies/ruby-1.9.3-p194/lib/ruby/site_ruby/1.9.1/xmpp4r/stream.rb:137:in <span class="sb">`</span>parse_failure<span class="s1">&#39;</span>
+</span><span class='line'><span class="s1">    /usr/local/rvm/rubies/ruby-1.9.3-p194/lib/ruby/site_ruby/1.9.1/xmpp4r/streamparser.rb:81:in `rescue in parse&#39;</span>
+</span><span class='line'>    /usr/local/rvm/rubies/ruby-1.9.3-p194/lib/ruby/site_ruby/1.9.1/xmpp4r/streamparser.rb:38:in <span class="sb">`</span>parse<span class="s1">&#39;</span>
+</span><span class='line'><span class="s1">    /usr/local/rvm/rubies/ruby-1.9.3-p194/lib/ruby/site_ruby/1.9.1/xmpp4r/stream.rb:75:in `block in start&#39;</span>
+</span><span class='line'>  /usr/local/rvm/rubies/ruby-1.9.3-p194/lib/ruby/1.9.1/thread.rb:71:in <span class="sb">`</span>sleep<span class="s1">&#39;: deadlock detected (fatal)</span>
+</span><span class='line'><span class="s1"> from /usr/local/rvm/rubies/ruby-1.9.3-p194/lib/ruby/1.9.1/thread.rb:71:in `wait&#39;</span>
+</span><span class='line'>  from /usr/local/rvm/rubies/ruby-1.9.3-p194/lib/ruby/site_ruby/1.9.1/xmpp4r/semaphore.rb:24:in <span class="sb">`</span>block in <span class="nb">wait</span><span class="s1">&#39;</span>
+</span><span class='line'><span class="s1"> from &lt;internal:prelude&gt;:10:in `synchronize&#39;</span>
+</span><span class='line'>  from /usr/local/rvm/rubies/ruby-1.9.3-p194/lib/ruby/site_ruby/1.9.1/xmpp4r/semaphore.rb:23:in <span class="sb">`</span><span class="nb">wait</span><span class="s1">&#39;</span>
+</span><span class='line'><span class="s1"> from /usr/local/rvm/rubies/ruby-1.9.3-p194/lib/ruby/site_ruby/1.9.1/xmpp4r/stream.rb:331:in `wait&#39;</span>
+</span><span class='line'>  from /usr/local/rvm/rubies/ruby-1.9.3-p194/lib/ruby/site_ruby/1.9.1/xmpp4r/stream.rb:398:in <span class="sb">`</span>send<span class="s1">&#39;</span>
+</span><span class='line'><span class="s1"> from /usr/local/rvm/rubies/ruby-1.9.3-p194/lib/ruby/site_ruby/1.9.1/xmpp4r/client.rb:88:in `start&#39;</span>
+</span><span class='line'>  from /usr/local/rvm/rubies/ruby-1.9.3-p194/lib/ruby/site_ruby/1.9.1/xmpp4r/client.rb:175:in <span class="sb">`</span>auth_sasl<span class="s1">&#39;</span>
+</span><span class='line'><span class="s1"> from /usr/local/rvm/rubies/ruby-1.9.3-p194/lib/ruby/site_ruby/1.9.1/xmpp4r/client.rb:112:in `auth&#39;</span>
+</span><span class='line'>  from ./pub-just:18:in <span class="sb">`</span>&lt;main&gt;<span class="err">&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Of course I don&rsquo;t think that Ruby&rsquo;s sax2parser makes my app go wrong. So I checked the xmpp4r&rsquo;s code. From the exception , i can find that tha problem occurs after the <code>auth</code> stanza,
+then I checked the src-code from <code>XMPP4R_GEM_PATH/client.rb</code>, and find the code after auth.</p>
+
+<figure class='code'><figcaption><span>&#8220;XMPP4R_GEM_PATH/client.rb&#8221; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">auth_sasl</span><span class="p">(</span><span class="n">sasl</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span>
+</span><span class='line'>  <span class="n">sasl</span><span class="o">.</span><span class="n">auth</span><span class="p">(</span><span class="n">password</span><span class="p">)</span>
+</span><span class='line'>  <span class="c1"># Restart stream after SASL auth</span>
+</span><span class='line'>  <span class="n">stop</span>
+</span><span class='line'>  <span class="n">start</span>
+</span><span class='line'>  <span class="c1"># And wait for features - again</span>
+</span><span class='line'>  <span class="vi">@features_sem</span><span class="o">.</span><span class="n">wait</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1"># Resource binding (RFC3920 - 7)</span>
+</span><span class='line'>  <span class="k">if</span> <span class="vi">@stream_features</span><span class="o">.</span><span class="n">has_key?</span> <span class="s1">&#39;bind&#39;</span>
+</span><span class='line'>      <span class="vi">@jid</span> <span class="o">=</span> <span class="n">bind</span><span class="p">(</span><span class="vi">@jid</span><span class="o">.</span><span class="n">resource</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1"># Session starting</span>
+</span><span class='line'>  <span class="k">if</span> <span class="vi">@stream_features</span><span class="o">.</span><span class="n">has_key?</span> <span class="s1">&#39;session&#39;</span>
+</span><span class='line'>      <span class="n">iq</span> <span class="o">=</span> <span class="no">Iq</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="ss">:set</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">session</span> <span class="o">=</span> <span class="n">iq</span><span class="o">.</span><span class="n">add</span> <span class="no">REXML</span><span class="o">::</span><span class="no">Element</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">&#39;session&#39;</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">session</span><span class="o">.</span><span class="n">add_namespace</span> <span class="vi">@stream_features</span><span class="o">[</span><span class="s1">&#39;session&#39;</span><span class="o">]</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="n">send_with_id</span><span class="p">(</span><span class="n">iq</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>there is one <code>stop</code> and <code>start</code> after auth. So I traced the <code>stop</code> and <code>start</code>, and found the <code>stop</code> implemented in file <code>XMPP4R_GEM_PATH/stream.rb</code> as follows:</p>
+
+<figure class='code'><figcaption><span>&#8220;XMPP4R_GEM_PATH/stream.rb&#8221; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="nf">stop</span>
+</span><span class='line'>  <span class="vi">@parser_thread</span><span class="o">.</span><span class="n">kill</span>
+</span><span class='line'>  <span class="vi">@parser</span> <span class="o">=</span> <span class="kp">nil</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>and the <code>@parser_thread</code> is obviously a Thread, so the problem must be caused by the thread&rsquo;s mech, it must be when the thread&rsquo;s not being killed entirely we call the method <code>start</code>, so I hacked the code via add a line <code>while @parser_thread.alive? do end</code> and modify the code above in file <code>XMPP4R_GEM_PATH/client.rb</code> as follows:</p>
+
+<figure class='code'><figcaption><span>&#8220;XMPP4R_GEM_PATH/client.rb&#8221; </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">auth_sasl</span><span class="p">(</span><span class="n">sasl</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span>
+</span><span class='line'>  <span class="n">sasl</span><span class="o">.</span><span class="n">auth</span><span class="p">(</span><span class="n">password</span><span class="p">)</span>
+</span><span class='line'>  <span class="c1"># Restart stream after SASL auth</span>
+</span><span class='line'>  <span class="n">stop</span>
+</span><span class='line'>  <span class="k">while</span> <span class="vi">@parser_thread</span><span class="o">.</span><span class="n">alive?</span> <span class="k">do</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>  <span class="n">start</span>
+</span><span class='line'>  <span class="c1"># And wait for features - again</span>
+</span><span class='line'>  <span class="vi">@features_sem</span><span class="o">.</span><span class="n">wait</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1"># Resource binding (RFC3920 - 7)</span>
+</span><span class='line'>  <span class="k">if</span> <span class="vi">@stream_features</span><span class="o">.</span><span class="n">has_key?</span> <span class="s1">&#39;bind&#39;</span>
+</span><span class='line'>      <span class="vi">@jid</span> <span class="o">=</span> <span class="n">bind</span><span class="p">(</span><span class="vi">@jid</span><span class="o">.</span><span class="n">resource</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1"># Session starting</span>
+</span><span class='line'>  <span class="k">if</span> <span class="vi">@stream_features</span><span class="o">.</span><span class="n">has_key?</span> <span class="s1">&#39;session&#39;</span>
+</span><span class='line'>      <span class="n">iq</span> <span class="o">=</span> <span class="no">Iq</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="ss">:set</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">session</span> <span class="o">=</span> <span class="n">iq</span><span class="o">.</span><span class="n">add</span> <span class="no">REXML</span><span class="o">::</span><span class="no">Element</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">&#39;session&#39;</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">session</span><span class="o">.</span><span class="n">add_namespace</span> <span class="vi">@stream_features</span><span class="o">[</span><span class="s1">&#39;session&#39;</span><span class="o">]</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="n">send_with_id</span><span class="p">(</span><span class="n">iq</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Until now, my code is working normally, hope this help you someday.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">@jstdoit</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-11-26T06:03:00+08:00" pubdate data-updated="true">Nov 26<span>th</span>, 2012</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/ruby/'>Ruby</a>, <a class='category' href='/blog/categories/server/'>Server</a>, <a class='category' href='/blog/categories/xmpp/'>XMPP</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2012/11/23/use-whenever-to-make-cron-task/" title="Previous Post: Use Whenever to make Cron task">&laquo; Use Whenever to make Cron task</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2012/11/29/asmack-with-vines-xmpp/" title="Next Post: asmack with vines xmpp">asmack with vines xmpp &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/11/30/install-openfire-on-ubuntu-12-dot-04-server/">Install Openfire on Ubuntu 12.04 Server</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/11/29/asmack-with-vines-xmpp/">Asmack With Vines Xmpp</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/11/26/xmpp4r-pubsub-hack/">Xmpp4r PUBSUB Hack</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/11/23/use-whenever-to-make-cron-task/">Use Whenever to Make Cron Task</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/11/23/sync-data-between-servers/">Sync Data Between Servers</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/jstdoit">@jstdoit</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'jstdoit',
+            count: 1,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - @jstdoit -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'jstdoit';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://jstdoit.github.io/blog/2012/11/26/xmpp4r-pubsub-hack/';
+        var disqus_url = 'http://jstdoit.github.io/blog/2012/11/26/xmpp4r-pubsub-hack/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
