@@ -4,7 +4,7 @@
   <title><![CDATA[{@jstdoit}]]></title>
   <link href="http://jstdoit.github.io/atom.xml" rel="self"/>
   <link href="http://jstdoit.github.io/"/>
-  <updated>2013-05-13T17:05:06+08:00</updated>
+  <updated>2013-05-13T17:14:45+08:00</updated>
   <id>http://jstdoit.github.io/</id>
   <author>
     <name><![CDATA[@jstdoit]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Install Openfire on Ubuntu 12.04 Server]]></title>
-    <link href="http://jstdoit.github.io/blog/2012/11/30/install-openfire-on-ubuntu-12-dot-04-server/"/>
+    <link href="http://jstdoit.github.io/blog/install-openfire-on-ubuntu-12-dot-04-server/"/>
     <updated>2012-11-30T10:35:00+08:00</updated>
-    <id>http://jstdoit.github.io/blog/2012/11/30/install-openfire-on-ubuntu-12-dot-04-server</id>
+    <id>http://jstdoit.github.io/blog/install-openfire-on-ubuntu-12-dot-04-server</id>
     <content type="html"><![CDATA[<p>Wow! The vines xmpp server annoyed me so much. it&rsquo;s not implemented well, and not tested for concurrent. So i abandon it and changed to Openfire.
 when I install Openfire on My ubuntu 12.04 server, met the problem about jre, cos java is bought by Oracle and change some copyright doings, so we cannot find Sun&rsquo;s jre on Ubuntu via <code>apt-get</code> tools, after searching, i found the tool offered by <code>github</code> <a href="https://github.com/flexiondotorg/oab-java6">oab-java6</a> can easily solve the problem of Installing the sun&rsquo;s jre on ubuntu. steps as follows:</p>
 
@@ -39,9 +39,9 @@ the configuration of Openfire can follow <a href="http://www.igniterealtime.org/
   
   <entry>
     <title type="html"><![CDATA[asmack with vines xmpp]]></title>
-    <link href="http://jstdoit.github.io/blog/2012/11/29/asmack-with-vines-xmpp/"/>
+    <link href="http://jstdoit.github.io/blog/asmack-with-vines-xmpp/"/>
     <updated>2012-11-29T04:23:00+08:00</updated>
-    <id>http://jstdoit.github.io/blog/2012/11/29/asmack-with-vines-xmpp</id>
+    <id>http://jstdoit.github.io/blog/asmack-with-vines-xmpp</id>
     <content type="html"><![CDATA[<p>I am keen to program with Ruby, so i used <a href="http://getvines.com">Vines</a> as my xmpp server, though it is not implemented entirely.
 When i use <a href="https://github.com/Flowdalic/asmack">asmack</a> client library to connect to Vines xmpp server, i got this exception:</p>
 
@@ -114,9 +114,9 @@ When i use <a href="https://github.com/Flowdalic/asmack">asmack</a> client libra
   
   <entry>
     <title type="html"><![CDATA[xmpp4r PUBSUB hack]]></title>
-    <link href="http://jstdoit.github.io/blog/2012/11/26/xmpp4r-pubsub-hack/"/>
+    <link href="http://jstdoit.github.io/blog/xmpp4r-pubsub-hack/"/>
     <updated>2012-11-26T06:03:00+08:00</updated>
-    <id>http://jstdoit.github.io/blog/2012/11/26/xmpp4r-pubsub-hack</id>
+    <id>http://jstdoit.github.io/blog/xmpp4r-pubsub-hack</id>
     <content type="html"><![CDATA[<p>In my current <a href="http://about.yuncaipu.com">Project</a>, I need to use XMPP sending notification to android client, so I implemented a xmpp server using <a href="http://nodejs.org">Node.js</a>,
 and using <a href="http://home.gna.org/xmpp4r/">xmpp4r-0.5</a> to login as publisher to send notification to server. They all work well before i migrated all application to new server.
 Whenever I send msg, the xmpp4r always throws exceptions. Below is the trace:</p>
@@ -330,18 +330,18 @@ then I checked the src-code from <code>XMPP4R_GEM_PATH/client.rb</code>, and fin
   
   <entry>
     <title type="html"><![CDATA[Use Whenever to make Cron task]]></title>
-    <link href="http://jstdoit.github.io/blog/2012/11/23/use-whenever-to-make-cron-task/"/>
+    <link href="http://jstdoit.github.io/blog/use-whenever-to-make-cron-task/"/>
     <updated>2012-11-23T22:37:00+08:00</updated>
-    <id>http://jstdoit.github.io/blog/2012/11/23/use-whenever-to-make-cron-task</id>
+    <id>http://jstdoit.github.io/blog/use-whenever-to-make-cron-task</id>
     <content type="html"><![CDATA[<p><a href="https://github.com/javan/whenever">https://github.com/javan/whenever</a></p>
 ]]></content>
   </entry>
   
   <entry>
     <title type="html"><![CDATA[Sync Data Between Servers]]></title>
-    <link href="http://jstdoit.github.io/blog/2012/11/23/sync-data-between-servers/"/>
+    <link href="http://jstdoit.github.io/blog/sync-data-between-servers/"/>
     <updated>2012-11-23T10:51:00+08:00</updated>
-    <id>http://jstdoit.github.io/blog/2012/11/23/sync-data-between-servers</id>
+    <id>http://jstdoit.github.io/blog/sync-data-between-servers</id>
     <content type="html"><![CDATA[<p>Finishing configuring the new server, i need to migrate all business-data from prev-server to the new one.
 Wow! I think I don&rsquo;t know how to sync data realtime between servers, so I just <code>scp -r</code> all the data to the
 new server&hellip; ehh, I know it&rsquo;s now a good solution, but i don&rsquo;t know how.</p>
@@ -355,9 +355,9 @@ new server&hellip; ehh, I know it&rsquo;s now a good solution, but i don&rsquo;t
   
   <entry>
     <title type="html"><![CDATA[Switch to RedHat 5.4]]></title>
-    <link href="http://jstdoit.github.io/blog/2012/11/22/switch-to-redhat/"/>
+    <link href="http://jstdoit.github.io/blog/switch-to-redhat/"/>
     <updated>2012-11-22T15:45:00+08:00</updated>
-    <id>http://jstdoit.github.io/blog/2012/11/22/switch-to-redhat</id>
+    <id>http://jstdoit.github.io/blog/switch-to-redhat</id>
     <content type="html"><![CDATA[<p>these days, my boss asked me to transfer all our application to a server backed by RedHat 5.4 from Ubuntu, what a mass!
 these is no <code>apt</code> tools anymore on the new server, i just cannot adapt my life to next days without <code>apt</code> tools. Whatever, i need to install these software:
 <code>git</code>, <code>nodejs</code>, <code>ruby</code>, <code>nginx with passenger</code> for rails&#8217; deploy&hellip;</p>
@@ -485,9 +485,9 @@ I found that <code>rvm</code> gives me an option for install <code>libyaml</code
   
   <entry>
     <title type="html"><![CDATA[configure l2tp VPN on ubuntu VPS]]></title>
-    <link href="http://jstdoit.github.io/blog/2012/11/22/l2tp-setup-on-ubuntu-vps/"/>
+    <link href="http://jstdoit.github.io/blog/l2tp-setup-on-ubuntu-vps/"/>
     <updated>2012-11-22T02:47:00+08:00</updated>
-    <id>http://jstdoit.github.io/blog/2012/11/22/l2tp-setup-on-ubuntu-vps</id>
+    <id>http://jstdoit.github.io/blog/l2tp-setup-on-ubuntu-vps</id>
     <content type="html"><![CDATA[<p>the <a href="http://google.com">Google</a> of my country is sometimes blocked, but my work need that very much. As a coder, how can I tolerate such? as a result, i started my VPN server.
 below is my way how to install l2tp/ipsec service on my vps(os backed by Ubuntu 10.04).</p>
 
@@ -770,9 +770,9 @@ Monitor /var/log/system.log on your OS X by running</li>
   
   <entry>
     <title type="html"><![CDATA[开篇]]></title>
-    <link href="http://jstdoit.github.io/blog/2012/11/22/kai-pian/"/>
+    <link href="http://jstdoit.github.io/blog/kai-pian/"/>
     <updated>2012-11-22T02:17:00+08:00</updated>
-    <id>http://jstdoit.github.io/blog/2012/11/22/kai-pian</id>
+    <id>http://jstdoit.github.io/blog/kai-pian</id>
     <content type="html"><![CDATA[<p>我之前一直想建自己的博客，然后写点什么教程、心得之类的东西，对后面查询有帮助也对展示自己有点用处。在尝试玩Wordpress多次后发现自己完全不能喜欢上那个玩意儿，功能太多太复杂，我个人用不了.所以每次挂上博客后都闲着，要么是vps过期了，要么是没什么意思把他给删了。直到看老赵的<a href="http://windjs.org">windjs</a>博客的时候发现了ruby开发的这套博客系统，惊呆了，太尼玛适合码农使用了。</p>
 
 <!-- more -->

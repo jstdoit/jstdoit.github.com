@@ -4,7 +4,7 @@
   <title><![CDATA[Category: vpn | {@jstdoit}]]></title>
   <link href="http://jstdoit.github.io/blog/categories/vpn/atom.xml" rel="self"/>
   <link href="http://jstdoit.github.io/"/>
-  <updated>2013-05-13T17:05:06+08:00</updated>
+  <updated>2013-05-13T17:14:45+08:00</updated>
   <id>http://jstdoit.github.io/</id>
   <author>
     <name><![CDATA[@jstdoit]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[configure l2tp VPN on ubuntu VPS]]></title>
-    <link href="http://jstdoit.github.io/blog/2012/11/22/l2tp-setup-on-ubuntu-vps/"/>
+    <link href="http://jstdoit.github.io/blog/l2tp-setup-on-ubuntu-vps/"/>
     <updated>2012-11-22T02:47:00+08:00</updated>
-    <id>http://jstdoit.github.io/blog/2012/11/22/l2tp-setup-on-ubuntu-vps</id>
+    <id>http://jstdoit.github.io/blog/l2tp-setup-on-ubuntu-vps</id>
     <content type="html"><![CDATA[<p>the <a href="http://google.com">Google</a> of my country is sometimes blocked, but my work need that very much. As a coder, how can I tolerate such? as a result, i started my VPN server.
 below is my way how to install l2tp/ipsec service on my vps(os backed by Ubuntu 10.04).</p>
 
