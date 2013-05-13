@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Ruby | {@jstdoit}]]></title>
   <link href="http://jstdoit.github.io/blog/categories/ruby/atom.xml" rel="self"/>
   <link href="http://jstdoit.github.io/"/>
-  <updated>2013-05-13T17:14:45+08:00</updated>
+  <updated>2013-05-13T17:15:27+08:00</updated>
   <id>http://jstdoit.github.io/</id>
   <author>
     <name><![CDATA[@jstdoit]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[xmpp4r PUBSUB hack]]></title>
-    <link href="http://jstdoit.github.io/blog/xmpp4r-pubsub-hack/"/>
+    <link href="http://jstdoit.github.io/xmpp4r-pubsub-hack/"/>
     <updated>2012-11-26T06:03:00+08:00</updated>
-    <id>http://jstdoit.github.io/blog/xmpp4r-pubsub-hack</id>
+    <id>http://jstdoit.github.io/xmpp4r-pubsub-hack</id>
     <content type="html"><![CDATA[<p>In my current <a href="http://about.yuncaipu.com">Project</a>, I need to use XMPP sending notification to android client, so I implemented a xmpp server using <a href="http://nodejs.org">Node.js</a>,
 and using <a href="http://home.gna.org/xmpp4r/">xmpp4r-0.5</a> to login as publisher to send notification to server. They all work well before i migrated all application to new server.
 Whenever I send msg, the xmpp4r always throws exceptions. Below is the trace:</p>

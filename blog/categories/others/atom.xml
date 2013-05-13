@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Others | {@jstdoit}]]></title>
   <link href="http://jstdoit.github.io/blog/categories/others/atom.xml" rel="self"/>
   <link href="http://jstdoit.github.io/"/>
-  <updated>2013-05-13T17:14:45+08:00</updated>
+  <updated>2013-05-13T17:15:27+08:00</updated>
   <id>http://jstdoit.github.io/</id>
   <author>
     <name><![CDATA[@jstdoit]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[开篇]]></title>
-    <link href="http://jstdoit.github.io/blog/kai-pian/"/>
+    <link href="http://jstdoit.github.io/kai-pian/"/>
     <updated>2012-11-22T02:17:00+08:00</updated>
-    <id>http://jstdoit.github.io/blog/kai-pian</id>
+    <id>http://jstdoit.github.io/kai-pian</id>
     <content type="html"><![CDATA[<p>我之前一直想建自己的博客，然后写点什么教程、心得之类的东西，对后面查询有帮助也对展示自己有点用处。在尝试玩Wordpress多次后发现自己完全不能喜欢上那个玩意儿，功能太多太复杂，我个人用不了.所以每次挂上博客后都闲着，要么是vps过期了，要么是没什么意思把他给删了。直到看老赵的<a href="http://windjs.org">windjs</a>博客的时候发现了ruby开发的这套博客系统，惊呆了，太尼玛适合码农使用了。</p>
 
 <!-- more -->
