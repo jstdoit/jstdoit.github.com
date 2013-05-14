@@ -109,6 +109,24 @@ What I lack is &hellip;">
 
 <div class="entry-content"><p>As old days I programmed with Ruby, I always test my app by running it, so some problems will not appear until something match.
 What I lack is UnitTest and more test technique. With reading the book <em>The rails Way</em> I record my way of learning Rails test technique in this post.</p>
+
+<!--more-->
+
+
+<p>The built-in test framework in Rails is Test::Unit family of all xUnit. A subclass of Test::Unit::TestCase is the main part of Rails test.
+As with other test framework, Rails Test consists of 3 pats: setup, test_body, teardown.
+* setup</p>
+
+<pre><code>In setup we do something prepared for test body. such as initialize an Object etc.
+</code></pre>
+
+<ul>
+<li>test_body
+  In such test bodys, we do our purpose test work.</li>
+<li>teardown
+  In teardown we do something that when test body finished.</li>
+</ul>
+
 </div>
 
 
