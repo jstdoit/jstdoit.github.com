@@ -4,7 +4,7 @@
   <title><![CDATA[{@jstdoit}]]></title>
   <link href="http://jstdoit.github.io/atom.xml" rel="self"/>
   <link href="http://jstdoit.github.io/"/>
-  <updated>2013-05-13T17:19:47+08:00</updated>
+  <updated>2013-05-14T09:50:45+08:00</updated>
   <id>http://jstdoit.github.io/</id>
   <author>
     <name><![CDATA[@jstdoit]]></name>
@@ -12,6 +12,16 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Rails Test Learning]]></title>
+    <link href="http://jstdoit.github.io/rails-test-learning/"/>
+    <updated>2013-05-14T09:47:00+08:00</updated>
+    <id>http://jstdoit.github.io/rails-test-learning</id>
+    <content type="html"><![CDATA[<p>As old days I programmed with Ruby, I always test my app by running it, so some problems will not appear until something match.
+What I lack is UnitTest and more test technique. With reading the book &lt;<The rails Way>> I record my way of learning Rails test technique in this post.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Install Openfire on Ubuntu 12.04 Server]]></title>
