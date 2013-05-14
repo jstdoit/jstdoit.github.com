@@ -4,7 +4,7 @@
   <title><![CDATA[{@jstdoit}]]></title>
   <link href="http://jstdoit.github.io/atom.xml" rel="self"/>
   <link href="http://jstdoit.github.io/"/>
-  <updated>2013-05-14T10:05:31+08:00</updated>
+  <updated>2013-05-14T10:06:14+08:00</updated>
   <id>http://jstdoit.github.io/</id>
   <author>
     <name><![CDATA[@jstdoit]]></name>
@@ -27,11 +27,11 @@ What I lack is UnitTest and more test technique. With reading the book <em>The r
 <p>The built-in test framework in Rails is Test::Unit family of all xUnit. A subclass of Test::Unit::TestCase is the main part of Rails test.
 As with other test framework, Rails Test consists of 3 pats: setup, test_body, teardown.
 * setup
-In setup we do something prepared for test body. such as initialize an Object etc.
+ In setup we do something prepared for test body. such as initialize an Object etc.
 * test_body
-In such test bodys, we do our purpose test work.
+ In such test bodys, we do our purpose test work.
 * teardown
-In teardown we do something that when test body finished.</p>
+ In teardown we do something that when test body finished.</p>
 ]]></content>
   </entry>
   
