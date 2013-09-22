@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: 2014校招 | {@jstdoit}]]></title>
+  <link href="http://jstdoit.github.io/blog/categories/2014xiao-zhao/atom.xml" rel="self"/>
+  <link href="http://jstdoit.github.io/"/>
+  <updated>2013-09-22T23:51:58+08:00</updated>
+  <id>http://jstdoit.github.io/</id>
+  <author>
+    <name><![CDATA[@jstdoit]]></name>
+    <email><![CDATA[just_send@163.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[阿里巴巴笔试]]></title>
+    <link href="http://jstdoit.github.io/a-li-ba-ba-bi-shi/"/>
+    <updated>2013-09-22T23:47:00+08:00</updated>
+    <id>http://jstdoit.github.io/a-li-ba-ba-bi-shi</id>
+    <content type="html"><![CDATA[<p>今天参见了阿里巴巴集团的校园招聘北京站的笔试，考的研发岗位。题目内容多设计算法与数据结构方面的东西。感觉这些东西都好久之前的事情了，平时做项目也很少用到那些算法或者数据结构，关注的业务逻辑比较多，所以这笔试答的就马马虎虎吧。</p>
+
+<p>不过感觉如果工作也以这样的形式去考试的话，未免有点不可思议。遇到一些问题总得一段时间去思考最优解，结果卡卡卡这一份卷子上就有好几道问题要让你去给出最优解。要知道平时对一个问题的最优化过程至少也得2小时啊。这一份卷子2小时就要搞那么多最优解，麻烦，只能勉勉强强了，或许是我自己太弱了&hellip;</p>
+
+<p>权当是长见识吧！原来笔试还得交简历！这个真是长见识长大了！</p>
+]]></content>
+  </entry>
+  
+</feed>
